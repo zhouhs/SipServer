@@ -31,7 +31,6 @@ int main(int argc, const char* argv[]) {
     bool isConsoleOut = !parser.retrieve<std::string>("cout").empty();
     auto pathToAccounts = parser.retrieve<std::string>("accounts");
 
-    Registrar* registrar = new Registrar(pathToAccounts);
 
     auto loggingFile = parser.retrieve<std::string>("fileLogger");
     loggingFile = loggingFile != ""? loggingFile: defaultLogFilePath;
@@ -50,6 +49,8 @@ int main(int argc, const char* argv[]) {
     LOG(INFO) << "Log is wrote to " << loggingFile;
     LOG(INFO) << "Log level is " << (uint)logLevel;
     LOG(INFO) << "Echo to stdout is " << (isConsoleOut? "" : "not ") << "specified";
+
+    Registrar* registrar = new Registrar(pathToAccounts);
 
     SipServer::Builder sipServerBuilder;
     if (!portArg.empty()) {
