@@ -57,6 +57,7 @@ SipServer::~SipServer() {
     LOG(DEBUG) << "Destructor ~SipServer() is called";
     delete(serverSocket);
     delete(serverIo);
+    delete(registrar);
 }
 
 void SipServer::init() {
