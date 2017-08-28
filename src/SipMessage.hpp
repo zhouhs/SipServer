@@ -38,6 +38,9 @@ class SipMessage {
         SipMessage(const char* rowStringMessage);
         SipMessageType getSipMessageType();
         MethodType getMethod();
+        std::string getSenderId();
+        asio::ip::udp::endpoint getSenderEndPoint();
+
         operator std::string() const;
 };
 

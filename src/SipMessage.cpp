@@ -128,3 +128,11 @@ std::pair<std::string, asio::ip::udp::endpoint> SipMessage::parseContact(std::st
     }
     return std::make_pair(senderId, senderEndPoint);
 }
+
+std::string SipMessage::getSenderId() {
+    return senderId;
+}
+
+asio::ip::udp::endpoint SipMessage::getSenderEndPoint() {
+    return senderEndPoint;
+}
