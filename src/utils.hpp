@@ -3,6 +3,8 @@
 #define SIPSERVER_UTILS_HPP
 
 #include <algorithm>
+#include <sstream>
+#include <iostream>
 
 #include <easylogging++.h>
 
@@ -37,6 +39,5 @@ el::Level getLogLevel(std::string logLevel) {
         return el::Level::Unknown;
     }
 }
-
 
 #endif //SIPSERVER_UTILS_HPP
