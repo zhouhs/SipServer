@@ -18,14 +18,19 @@ enum class MethodType {
 class SipMessage {
     friend class SipParser;
 
-    public:
+    private:
         std::string startString;
         std::multimap<std::string, std::string> headers;
         std::multimap<std::string, std::string> body;
         SipMessageType type;
         MethodType method = MethodType::NONE;
+
+        static SipMessageType parseType(std::string&);
+        static MethodType parseMethod(std::string&);
+
     public:
         SipMessage() = default;
+        SipMessage(const char* rowStringMessage);
         SipMessageType getSipMessageType();
         MethodType getMethod();
         operator std::string() const;

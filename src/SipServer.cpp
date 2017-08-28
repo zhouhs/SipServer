@@ -12,28 +12,21 @@ using namespace std::string_literals;
 #include <ExitException.hpp>
 #include <ErrorCode.hpp>
 #include <Registrar.hpp>
-#include <SipParser.hpp>
+
 
 SipMessage SipServer::formOutgoingMessage(SipMessage incomingMessage) {
-    std::vector<std::string> headers;
-    std::vector<std::string> values;
-    for(auto i: incomingMessage.headers) {
-        headers.push_back(i.first);
-        values.push_back(i.second);
+    if(MethodType::REGISTER == incomingMessage.getMethod() ) {
+        //TODO:formResponseForRegister();
     }
-    std::ostringstream streamForHeaders;
-    std::copy(headers.begin(), headers.end(), std::ostream_iterator<std::string>(streamForHeaders,","));
-    std::string headersHeader = streamForHeaders.str();
-    headersHeader.pop_back(); //remove extra comma
-    incomingMessage.headers.insert(std::make_pair("Headers",headersHeader));
-
-    std::ostringstream streamForValues;
-    std::copy(values.begin(), values.end(), std::ostream_iterator<std::string>(streamForValues,","));
-    std::string valuesHeader = streamForValues.str();
-    valuesHeader.pop_back(); //remove extra comma
-    incomingMessage.headers.insert(std::make_pair("Values",valuesHeader));
-    return incomingMessage;
+    return SipMessage();
 }
+
+
+SipMessage SipServer::formResponseForRegisterRequest(SipMessage incomingMessage) {
+    //TODO:
+    return SipMessage();
+}
+
 
 SipServer::SipServer():
     serverIo(new asio::io_service()),
@@ -159,7 +152,7 @@ void SipServer::run() {
         }
 
         if (bytesReceived != 0) {
-            SipMessage incomingMessage = SipParser::parse(buff);
+            SipMessage incomingMessage = SipMessage(buff);
             auto outgoingMessage = formOutgoingMessage(incomingMessage);
 
             size_t bytesSent = serverSocket->send_to(asio::buffer(static_cast<std::string>(outgoingMessage)),
