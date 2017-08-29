@@ -54,6 +54,14 @@ SipMessage::SipMessage(const char * rawStringMessage) {
     senderEndPoint = parsedContact.second;
 }
 
+SipMessage::SipMessage(std::string startString, std::multimap<std::string, std::string> headers,
+                       std::multimap<std::string, std::string> body):
+    startString(startString), headers(headers), body(body)
+{
+    //
+}
+
+
 SipMessage::operator std::string() const {
     std::string result;
     result += startString;
@@ -136,3 +144,12 @@ std::string SipMessage::getSenderId() {
 asio::ip::udp::endpoint SipMessage::getSenderEndPoint() {
     return senderEndPoint;
 }
+
+std::multimap<std::string, std::string> SipMessage::getHeaders() {
+    return headers;
+}
+
+std::multimap<std::string, std::string> SipMessage::getBody() {
+    return body;
+}
+
